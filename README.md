@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/logo-linguago.svg">
+    <img src="docs/logo-linguago-claro.svg" alt="LinguaGo" width="305">
+  </picture>
+</p>
+
 # LinguaGo
 
 App web para aprender inglês em lições curtas, feito para quem fala português. A trilha vai do A1 ao C1, com XP por acerto, meta diária e sequência de dias de estudo.
