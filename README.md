@@ -42,7 +42,8 @@ App web para aprender inglês em lições curtas, feito para quem fala portuguê
 
 - **RLS em todas as tabelas:** cada usuário só lê os próprios dados.
 - **Gravação só pelo banco:** o navegador não grava direto nas tabelas de progresso. Tudo passa pelas funções `complete_lesson` e `import_local_progress`, que identificam o usuário pela sessão e calculam e limitam o XP no servidor.
-- **Teste automatizado das políticas:** `supabase/tests/rls_test.sql` confere, com dois usuários de teste e um visitante sem login, que ninguém lê dados de outra pessoa nem altera o próprio XP.
+- **Data da lição conferida no servidor:** `complete_lesson` só aceita o dia de hoje, com 1 dia de folga para mais ou para menos, no fuso salvo no perfil. Isso impede registrar lições em datas inventadas para inflar a sequência.
+- **Teste automatizado das políticas:** `supabase/tests/rls_test.sql` confere, com dois usuários de teste e um visitante sem login, que ninguém lê dados de outra pessoa, altera o próprio XP ou grava uma data falsa.
 - **Chaves:** o front-end usa só a chave pública do Supabase. O `.env` não vai para o repositório.
 
 ## Como rodar localmente
@@ -64,7 +65,8 @@ Outros comandos: `npm run build` gera a versão de produção, e `npm run lint` 
 No **SQL Editor** do Supabase:
 
 1. Rode `supabase/migrations/001_init.sql`. Ele cria as tabelas, as políticas de RLS, as funções e o gatilho que cria o perfil no cadastro.
-2. Rode `supabase/tests/rls_test.sql`. Todos os testes devem terminar como `OK`.
+2. Rode `supabase/migrations/002_validate_lesson_day.sql`. Ele ativa a conferência da data da lição.
+3. Rode `supabase/tests/rls_test.sql`. Todos os testes devem terminar como `OK`.
 
 Em **Authentication**, deixe o login por e-mail ativo e coloque `http://localhost:5173` em **URL Configuration**.
 
