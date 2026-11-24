@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useAuth } from './auth/AuthContext.jsx'
-import DebugClock from './components/DebugClock.jsx'
 import Logo from './components/Logo.jsx'
 import Navbar from './components/Navbar.jsx'
 import Home from './pages/Home.jsx'
@@ -42,12 +41,7 @@ function LoadError({ onRetry, onLogout }) {
 }
 
 export default function App() {
-  return (
-    <>
-      <Pages />
-      {import.meta.env.DEV && <DebugClock />}
-    </>
-  )
+  return <Pages />
 }
 
 function Pages() {

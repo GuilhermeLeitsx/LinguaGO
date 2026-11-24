@@ -14,9 +14,9 @@ export const STORAGE_VERSION = 2
 export const VERSION_KEY = 'lg:version'
 export const PROGRESS_PREFIX = 'lg:progress:'
 
-// Chaves que não são dados do usuário (sessão, preferências temporárias, debug, cópias)
+// Chaves que não são dados do usuário (sessão, preferências temporárias, cópias)
 const isPersistent = (k) =>
-  k.startsWith('lg:') && k !== VERSION_KEY && k !== 'lg:session' && k !== 'lg:audioPausedUntil' && !k.startsWith('lg:debug:') && !k.startsWith('lg:backup:') && !k.startsWith('lg:ui:')
+  k.startsWith('lg:') && k !== VERSION_KEY && k !== 'lg:session' && k !== 'lg:audioPausedUntil' && !k.startsWith('lg:backup:') && !k.startsWith('lg:ui:')
 
 // Data AAAA-MM-DD somada de n dias (calendário local)
 function addDays(s, n) {

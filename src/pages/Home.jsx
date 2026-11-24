@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.jsx'
 import units, { lessonStatus } from '../data/course.js'
 import { choiceById, LEVEL_NAME } from '../data/levels.js'
-import { now } from '../progress/clock.js'
+import { parseDay } from '../progress/clock.js'
 import { DAILY_GOAL, dayStr, getStreak, xpToday } from '../progress/progress.js'
 import { useProgress } from '../progress/ProgressContext.jsx'
 import ImportLocal from '../components/ImportLocal.jsx'
@@ -91,7 +91,7 @@ function StreakCard({ progress }) {
   const today = dayStr()
   const streak = getStreak(progress, today)
   // semana atual, de segunda a domingo; acesos nos dias com atividade registrada
-  const monday = now()
+  const monday = parseDay(today)
   monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7))
   const days = Array.from({ length: 7 }, (_, k) => {
     const d = new Date(monday)

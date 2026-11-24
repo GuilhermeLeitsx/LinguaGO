@@ -14,7 +14,7 @@
 --
 -- Datas: o dia de atividade (day) é calculado NO NAVEGADOR, no fuso local do
 -- usuário (AAAA-MM-DD), e enviado como date. O servidor não converte de UTC.
--- Por decisão, o servidor não valida se o dia é "hoje" (o painel de debug usa isso).
+-- A validação do dia (hoje ± 1 no fuso do perfil) vem em 002_validate_lesson_day.sql.
 --
 -- Rodar uma vez no SQL Editor do Supabase (como postgres).
 -- =============================================================================

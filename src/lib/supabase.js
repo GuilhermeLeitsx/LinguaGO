@@ -20,6 +20,7 @@ export function friendlyError(err) {
   if (code === 'weak_password' || /password should be/i.test(msg)) return 'Senha fraca: use pelo menos 6 caracteres.'
   if (code === 'email_address_invalid' || /invalid.*email|email.*invalid/i.test(msg)) return 'E-mail inválido.'
   if (code === 'email_not_confirmed') return 'Confirme seu e-mail antes de entrar.'
+  if (err?.hint === 'invalid_day') return 'A data do seu aparelho não confere com a data de hoje. Ajuste a data e o fuso horário e tente de novo.'
   if (/rate limit/i.test(code + msg)) return 'Muitas tentativas seguidas. Espere um pouco e tente de novo.'
   if (/failed to fetch|networkerror|load failed/i.test(msg)) return 'Sem conexão com o servidor. Verifique sua internet e tente de novo.'
   return 'Algo deu errado. Tente de novo em instantes.'
