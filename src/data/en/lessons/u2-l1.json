@@ -1,0 +1,13 @@
+{
+  "id": "u2-l1",
+  "title": "Cores",
+  "exercises": [
+    { "type": "match", "pairs": [["Red", "Vermelho"], ["Blue", "Azul"], ["Green", "Verde"], ["Yellow", "Amarelo"]], "explain": "Em inglês a cor vem antes do substantivo: “a red car”, um carro vermelho." },
+    { "type": "fill", "sentence": "The sky is ___.", "translation": "O céu é azul.", "options": ["blue", "green", "black", "yellow"], "answer": "blue", "explain": "Blue é azul. Lembre: em inglês a cor não muda com o gênero." },
+    { "type": "choice", "question": "Qual é \"Preto\" em inglês?", "options": ["White", "Black", "Brown", "Gray"], "answer": "Black", "explain": "“Black” é preto; white é branco, brown é marrom e gray é cinza." },
+    { "type": "build", "prompt": "O carro é azul.", "words": ["The", "car", "is", "blue"], "distractors": ["red", "are"], "explain": "“Is” é usado com uma coisa só; “are” com várias: “the cars are blue”." },
+    { "type": "translate", "prompt": "Traduza: Branco", "answer": ["white"], "explain": "“White” é branco. O h quase não aparece na pronúncia: soa como “uait”." },
+    { "type": "listen", "text": "Green", "explain": "Green é verde. O ee soa como um i longo: “griin”." },
+    { "type": "translate", "prompt": "Traduza: A maçã é vermelha", "answer": ["the apple is red"], "explain": "A cor não muda com o gênero: “The apple is red”, “The car is red”." }
+  ]
+}

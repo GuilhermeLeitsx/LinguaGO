@@ -1,0 +1,13 @@
+{
+  "id": "u1-l2",
+  "title": "Apresentações",
+  "exercises": [
+    { "type": "choice", "question": "Como se diz \"Meu nome é Ana\"?", "options": ["My name is Ana", "I am name Ana", "Name my Ana", "Me call Ana"], "answer": "My name is Ana", "explain": "Use “My name is” + seu nome. A ordem é igual à do português: meu nome é." },
+    { "type": "fill", "sentence": "Nice to ___ you.", "translation": "Prazer em conhecer você.", "options": ["meet", "see", "know", "make"], "answer": "meet", "explain": "“Meet” é conhecer alguém pela primeira vez. “Know” é conhecer no sentido de já saber quem é." },
+    { "type": "choice", "question": "O que significa \"Nice to meet you\"?", "options": ["Como vai você?", "Prazer em conhecê-lo", "Até amanhã", "De nada"], "answer": "Prazer em conhecê-lo", "explain": "“Nice to meet you” se diz ao conhecer alguém. A resposta comum é “Nice to meet you too”." },
+    { "type": "build", "prompt": "Meu nome é Ana.", "words": ["My", "name", "is", "Ana"], "distractors": ["Me", "are"], "explain": "“My name is” é a forma mais comum de se apresentar. “Me” não serve aqui: o certo é “my” (meu)." },
+    { "type": "translate", "prompt": "Traduza: Eu sou do Brasil", "answer": ["i am from brazil", "i'm from brazil"], "explain": "“I am from” diz de onde você é; na fala vira “I’m from”. Em inglês, Brasil se escreve Brazil, com z." },
+    { "type": "listen", "text": "Nice to meet you", "explain": "Na fala rápida, “meet you” soa quase como “mitiu”." },
+    { "type": "match", "pairs": [["I", "Eu"], ["You", "Você"], ["Name", "Nome"], ["Friend", "Amigo"]], "explain": "“You” serve para você e vocês. “Friend” vale para amigo e amiga." }
+  ]
+}

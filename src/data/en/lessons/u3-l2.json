@@ -1,0 +1,11 @@
+{
+  "id": "u3-l2",
+  "title": "Ontem",
+  "exercises": [
+    { "type": "match", "pairs": [["Went", "Fui"], ["Saw", "Vi"], ["Ate", "Comi"], ["Bought", "Comprei"]], "explain": "Esses são verbos irregulares: o passado não termina em -ed (go → went, see → saw)." },
+    { "type": "fill", "sentence": "I ___ a movie last night.", "translation": "Eu vi um filme ontem à noite.", "options": ["watched", "watch", "watching", "watches"], "answer": "watched", "explain": "Watch é regular: no passado, basta acrescentar -ed." },
+    { "type": "choice", "question": "Qual pergunta está correta?", "options": ["Did you go to school?", "Did you went to school?", "You did go to school?", "Went you to school?"], "answer": "Did you go to school?", "explain": "Com “did”, o verbo volta para a forma base: did you go, não did you went." },
+    { "type": "build", "prompt": "Ela não ligou para mim.", "words": ["She", "didn't", "call", "me"], "distractors": ["called", "doesn't"], "explain": "Negativa no passado: didn't + verbo na forma base." },
+    { "type": "listen", "text": "We bought a new car", "explain": "Bought é o passado de buy (comprar). O “ough” soa como “ó”: “bót”." }
+  ]
+}

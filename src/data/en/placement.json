@@ -1,0 +1,15 @@
+{
+  "about": "Teste de nivelamento: 10 perguntas em ordem crescente de dificuldade, 2 por nível. Domina um nível quem acerta as 2 dele.",
+  "questions": [
+    { "level": "A1", "type": "choice", "question": "Qual é a tradução de \"Good morning\"?", "options": ["Bom dia", "Boa noite", "Até logo", "Obrigado"], "answer": "Bom dia" },
+    { "level": "A1", "type": "fill", "sentence": "They ___ my friends.", "translation": "Eles são meus amigos.", "options": ["are", "is", "am", "be"], "answer": "are" },
+    { "level": "A2", "type": "fill", "sentence": "I ___ to the beach last summer.", "translation": "Eu fui à praia no verão passado.", "options": ["went", "go", "have gone", "going"], "answer": "went" },
+    { "level": "A2", "type": "choice", "question": "Complete: \"She is ___ than her brother.\"", "options": ["taller", "more tall", "tallest", "the taller"], "answer": "taller" },
+    { "level": "B1", "type": "fill", "sentence": "I have lived here ___ ten years.", "translation": "Eu moro aqui há dez anos.", "options": ["for", "since", "during", "ago"], "answer": "for" },
+    { "level": "B1", "type": "choice", "question": "Complete: \"If it rains tomorrow, we ___ at home.\"", "options": ["will stay", "would stay", "stayed", "stay will"], "answer": "will stay" },
+    { "level": "B2", "type": "fill", "sentence": "If I ___ you, I wouldn't do that.", "translation": "Se eu fosse você, não faria isso.", "options": ["were", "am", "will be", "have been"], "answer": "were" },
+    { "level": "B2", "type": "choice", "question": "Complete: \"The bridge ___ in 1990.\"", "options": ["was built", "built", "has built", "is building"], "answer": "was built" },
+    { "level": "C1", "type": "fill", "sentence": "Hardly ___ arrived when the meeting started.", "translation": "Mal eu tinha chegado quando a reunião começou.", "options": ["had I", "I had", "did I", "I have"], "answer": "had I" },
+    { "level": "C1", "type": "choice", "question": "O que significa \"to cut corners\"?", "options": ["Fazer algo de qualquer jeito para economizar", "Pegar um atalho no caminho", "Cortar gastos desnecessários com cuidado", "Interromper alguém"], "answer": "Fazer algo de qualquer jeito para economizar" }
+  ]
+}

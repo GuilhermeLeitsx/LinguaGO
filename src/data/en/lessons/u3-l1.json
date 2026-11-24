@@ -1,0 +1,11 @@
+{
+  "id": "u3-l1",
+  "title": "Minha rotina",
+  "exercises": [
+    { "type": "match", "pairs": [["Wake up", "Acordar"], ["Have breakfast", "Tomar café da manhã"], ["Go to work", "Ir trabalhar"], ["Go to bed", "Ir dormir"]], "explain": "Em inglês, “have” aparece com refeições: have breakfast, have lunch, have dinner." },
+    { "type": "fill", "sentence": "She ___ up at seven every day.", "translation": "Ela acorda às sete todo dia.", "options": ["wakes", "wake", "waking", "woke"], "answer": "wakes", "explain": "Com he/she/it no presente simples, o verbo ganha -s: she wakes, he works." },
+    { "type": "choice", "question": "Como se diz \"Eu nunca bebo café\"?", "options": ["I never drink coffee", "I drink never coffee", "I don't never drink coffee", "Never I drink coffee"], "answer": "I never drink coffee", "explain": "Advérbios de frequência (always, usually, never) vêm antes do verbo principal." },
+    { "type": "build", "prompt": "Nós almoçamos ao meio-dia.", "words": ["We", "have", "lunch", "at", "noon"], "distractors": ["has", "in"], "explain": "Com we, o verbo fica “have” (“has” só com he/she/it). E use “at” para horários: at noon, at 7 o’clock." },
+    { "type": "translate", "prompt": "Traduza: Ele trabalha de segunda a sexta", "answer": ["he works from monday to friday", "he works monday to friday"], "explain": "Dias da semana em inglês sempre começam com letra maiúscula: Monday, Friday." }
+  ]
+}

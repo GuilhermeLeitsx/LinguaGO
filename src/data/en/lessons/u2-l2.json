@@ -1,0 +1,13 @@
+{
+  "id": "u2-l2",
+  "title": "Números",
+  "exercises": [
+    { "type": "choice", "question": "Qual número é \"Five\"?", "options": ["3", "4", "5", "6"], "answer": "5", "explain": "“Five” é 5. Os primeiros números: one, two, three, four, five." },
+    { "type": "fill", "sentence": "I am ___ years old.", "translation": "Eu tenho dez anos.", "options": ["ten", "two", "one", "three"], "answer": "ten", "explain": "Para idade, o inglês usa o verbo ser: “I am ten years old”, literalmente “eu sou dez anos velho”." },
+    { "type": "match", "pairs": [["One", "Um"], ["Two", "Dois"], ["Three", "Três"], ["Ten", "Dez"]], "explain": "“Ten” é 10. Em “three”, o som de th sai com a língua entre os dentes." },
+    { "type": "build", "prompt": "Eu tenho três livros.", "words": ["I", "have", "three", "books"], "distractors": ["two", "book"], "explain": "Com mais de um, o substantivo ganha s: one book, three books." },
+    { "type": "translate", "prompt": "Traduza: Sete", "answer": ["seven"], "explain": "“Seven” é 7. A sequência é five, six, seven, eight." },
+    { "type": "listen", "text": "Two cats", "answer": ["two cats", "2 cats"], "explain": "Two soa como “tu”, igual a “to” e “too”: o contexto mostra qual é qual." },
+    { "type": "translate", "prompt": "Traduza: Eu tenho dois gatos", "answer": ["i have two cats", "i have 2 cats"], "explain": "“I have” é eu tenho. O plural costuma ganhar s no final: cat, cats." }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "u5-l1",
+  "title": "E se…?",
+  "exercises": [
+    { "type": "fill", "sentence": "If I ___ more time, I would travel more.", "translation": "Se eu tivesse mais tempo, viajaria mais.", "options": ["had", "have", "would have", "has"], "answer": "had", "explain": "Segunda condicional: if + passado, would + verbo. Fala de situações hipotéticas no presente." },
+    { "type": "choice", "question": "Qual frase fala de um arrependimento sobre o passado?", "options": ["If I had studied, I would have passed.", "If I study, I will pass.", "If I studied, I would pass.", "If I study, I pass."], "answer": "If I had studied, I would have passed.", "explain": "Terceira condicional: if + had + particípio, would have + particípio." },
+    { "type": "fill", "sentence": "I wish I ___ speak Japanese.", "translation": "Queria saber falar japonês.", "options": ["could", "can", "will", "am able"], "answer": "could", "explain": "Depois de “I wish”, recuamos um tempo verbal: can → could." },
+    { "type": "build", "prompt": "Se eu fosse você, eu aceitaria.", "words": ["If", "I", "were", "you", "I'd", "accept"], "distractors": ["was", "will"], "explain": "Em “If I were you”, usa-se were para todas as pessoas no registro padrão." },
+    { "type": "translate", "prompt": "Traduza: Se chover, ficaremos em casa", "answer": ["if it rains we will stay home", "if it rains we'll stay home", "if it rains we will stay at home", "if it rains we'll stay at home"], "explain": "Primeira condicional: if + presente, will + verbo. Nunca use will depois de if." }
+  ]
+}

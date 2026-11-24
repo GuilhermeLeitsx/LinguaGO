@@ -1,0 +1,14 @@
+{
+  "id": "u1-l1",
+  "title": "Cumprimentos",
+  "exercises": [
+    { "type": "choice", "question": "Como se diz \"Olá\" em inglês?", "options": ["Hello", "Goodbye", "Please", "Thanks"], "answer": "Hello", "explain": "“Hello” é o cumprimento mais comum em inglês e serve para qualquer hora do dia." },
+    { "type": "fill", "sentence": "Good ___!", "translation": "Bom dia!", "options": ["morning", "night", "afternoon", "evening"], "answer": "morning", "explain": "Morning é manhã. Afternoon é tarde, evening é noite e night é a noite na hora de dormir." },
+    { "type": "choice", "question": "O que significa \"Good morning\"?", "options": ["Boa noite", "Bom dia", "Boa tarde", "Até logo"], "answer": "Bom dia", "explain": "“Morning” é manhã. Boa tarde é “Good afternoon” e boa noite é “Good evening” (ou “Good night” na despedida)." },
+    { "type": "build", "prompt": "Bom dia, obrigado!", "words": ["Good", "morning", "thank", "you"], "distractors": ["night", "please"], "answer": ["good morning thank you"], "explain": "Em inglês, “good morning” vem antes e o agradecimento depois, igual ao português." },
+    { "type": "match", "pairs": [["Hello", "Olá"], ["Goodbye", "Tchau"], ["Please", "Por favor"], ["Thank you", "Obrigado"]], "explain": "“Thank you” é mais formal; entre amigos, “Thanks” também vale." },
+    { "type": "translate", "prompt": "Traduza: Obrigado", "answer": ["thank you", "thanks"], "explain": "“Thank you” e “Thanks” significam obrigado. Em inglês a palavra não muda com o gênero de quem fala." },
+    { "type": "listen", "text": "Thank you", "explain": "O th de “thank” sai com a língua entre os dentes, um som que não existe em português." },
+    { "type": "translate", "prompt": "Traduza: Bom dia", "answer": ["good morning"], "explain": "“Good morning” se usa da manhã até mais ou menos o meio-dia." }
+  ]
+}

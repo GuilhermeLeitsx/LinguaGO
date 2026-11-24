@@ -1,0 +1,11 @@
+{
+  "id": "u4-l1",
+  "title": "Você já…?",
+  "exercises": [
+    { "type": "choice", "question": "Como se pergunta \"Você já foi a Londres?\"", "options": ["Have you ever been to London?", "Did you ever go to London already?", "Are you ever been to London?", "Have you ever went to London?"], "answer": "Have you ever been to London?", "explain": "Para experiências de vida sem data, use o present perfect: have + particípio (been)." },
+    { "type": "fill", "sentence": "I have ___ this book twice.", "translation": "Eu já li este livro duas vezes.", "options": ["read", "readed", "reading", "reads"], "answer": "read", "explain": "O particípio de read se escreve igual, mas soa “réd”." },
+    { "type": "fill", "sentence": "She has lived here ___ 2019.", "translation": "Ela mora aqui desde 2019.", "options": ["since", "for", "from", "ago"], "answer": "since", "explain": "Since marca o ponto de início (since 2019); for marca a duração (for five years)." },
+    { "type": "build", "prompt": "Eu nunca vi neve.", "words": ["I", "have", "never", "seen", "snow"], "distractors": ["saw", "didn't"], "explain": "Never fica entre have e o particípio: I have never seen." },
+    { "type": "translate", "prompt": "Traduza: Eles acabaram de chegar", "answer": ["they have just arrived", "they've just arrived", "they just arrived"], "explain": "“Acabar de” costuma virar have just + particípio: they’ve just arrived." }
+  ]
+}

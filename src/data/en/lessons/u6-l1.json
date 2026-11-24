@@ -1,0 +1,11 @@
+{
+  "id": "u6-l1",
+  "title": "Expressões idiomáticas",
+  "exercises": [
+    { "type": "match", "pairs": [["Break the ice", "Quebrar o gelo"], ["Hit the sack", "Ir dormir"], ["Under the weather", "Meio doente"], ["A piece of cake", "Moleza"]], "explain": "Idioms não se traduzem palavra por palavra: aprenda o sentido inteiro." },
+    { "type": "choice", "question": "O que significa \"to beat around the bush\"?", "options": ["Enrolar, não ir direto ao ponto", "Trabalhar no jardim", "Vencer com facilidade", "Fugir de um problema"], "answer": "Enrolar, não ir direto ao ponto", "explain": "“Stop beating around the bush!” = Para de enrolar!" },
+    { "type": "fill", "sentence": "Let's call it a ___ and finish tomorrow.", "translation": "Vamos encerrar por hoje e terminar amanhã.", "options": ["day", "night", "time", "break"], "answer": "day", "explain": "“Call it a day” = dar o dia por encerrado." },
+    { "type": "choice", "question": "\"It's not my cup of tea\" quer dizer…", "options": ["Não faz o meu estilo", "Não é minha culpa", "Não estou com sede", "Não é da minha conta"], "answer": "Não faz o meu estilo", "explain": "Usado para dizer, com leveza, que algo não agrada." },
+    { "type": "build", "prompt": "Ela pegou o jeito rapidinho.", "words": ["She", "got", "the", "hang", "of", "it", "quickly"], "distractors": ["take", "on"], "explain": "“Get the hang of something” = pegar o jeito de algo." }
+  ]
+}
