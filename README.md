@@ -70,6 +70,17 @@ No **SQL Editor** do Supabase:
 
 Em **Authentication**, deixe o login por e-mail ativo e coloque `http://localhost:5173` em **URL Configuration**.
 
+## Áudios das frases
+
+As frases em inglês tocam a partir de MP3s em `public/audio/`, gerados no seu computador com o modelo de voz Kokoro. Se uma frase não tiver MP3, o app usa a voz em inglês do navegador. Depois de criar ou mudar uma lição, rode:
+
+```bash
+npm install --prefix scripts/audio   # só na primeira vez
+npm run audio                        # gera só as frases novas ou alteradas
+```
+
+`npm run audio -- --dry-run` mostra o que seria gerado, e `--prune` apaga os áudios de frases que não existem mais. Não precisa de chave de API, e as dependências do script não entram no site.
+
 ## Deploy
 
 Na Vercel, importe o repositório e cadastre `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` nas variáveis de ambiente. O `vercel.json` faz todas as rotas abrirem o app. No Supabase, adicione o endereço do site em **URL Configuration**.
@@ -89,6 +100,10 @@ src/
 supabase/
   migrations/   esquema do banco
   tests/        teste das políticas de RLS
+scripts/
+  audio/        script que gera os MP3s das frases
+public/
+  audio/        MP3s das frases e o manifest.json
 docs/
   screenshots/  imagens deste README
 ```
