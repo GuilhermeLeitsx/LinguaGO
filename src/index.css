@@ -85,9 +85,16 @@ em.hl::after { content: ''; position: absolute; left: 0; right: 0; bottom: .02em
 .auth-box .eyebrow { margin-bottom: 20px; }
 .auth-box h1 { font-size: clamp(2.3rem, 4.6vw, 3.4rem); font-weight: 800; line-height: 1.02; margin-bottom: 14px; }
 .auth-sub { margin: 0 0 28px; font-size: 1.05rem; }
-.google-btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 13px 20px; border-radius: 99px; border: 1.5px solid var(--ink); background: var(--surface); color: var(--ink); font-weight: 700; box-shadow: 0 4px 0 var(--ink); transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
-.google-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
-.google-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+/* Botão oficial do Google (Google Identity Services): o Google desenha o botão dentro do slot */
+.google-gis { position: relative; display: grid; justify-items: center; gap: 10px; }
+/* color-scheme: light no contêiner: o iframe do Google é claro; se o esquema do iframe e o da
+   página forem diferentes (página escura), o navegador pinta um fundo branco opaco atrás dele */
+.google-gis-slot { width: 100%; min-height: 44px; display: flex; justify-content: center; color-scheme: light; transition: opacity .2s; }
+.google-gis.loading .google-gis-slot { max-width: 400px; border: 1.5px dashed var(--line); border-radius: 99px; }
+.google-gis-wait { position: absolute; top: 0; height: 44px; display: grid; place-items: center; font-size: .9rem; color: var(--muted); pointer-events: none; }
+.google-gis.busy .google-gis-slot { opacity: .5; pointer-events: none; }
+.google-gis.unavailable .google-gis-slot { display: none; }
+.google-gis .auth-notice { width: 100%; margin: 0; }
 .auth-notice { margin: 12px 0 0; padding: 10px 14px; border-radius: 14px; background: color-mix(in srgb, var(--sun) 28%, var(--surface)); font-size: .92rem; font-weight: 500; }
 .divider { display: flex; align-items: center; gap: 14px; margin: 26px 0 6px; color: var(--muted); font-size: .85rem; font-weight: 500; }
 .divider::before, .divider::after { content: ''; flex: 1; border-top: 1px dashed var(--line); }

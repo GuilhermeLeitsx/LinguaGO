@@ -47,7 +47,7 @@ export default function App() {
 }
 
 function Pages() {
-  const { user, loading, profileError, retryProfile, logout, oauthError } = useAuth()
+  const { user, loading, profileError, retryProfile, logout } = useAuth()
   const progress = useProgressContext()
   const { pathname } = useLocation()
 
@@ -55,8 +55,6 @@ function Pages() {
   if (pathname === '/privacidade') return <Privacy />
   if (loading) return <Splash />
   if (profileError) return <LoadError onRetry={retryProfile} onLogout={logout} />
-  // Voltou do Google com erro (ex.: cancelou): mostra o aviso na tela de login
-  if (!user && oauthError && pathname === '/') return <Navigate to="/login" replace />
   if (!user && pathname === '/') return <Landing />
   // Login e cadastro usam layout dividido em tela cheia, sem a navbar
   if (pathname === '/login') return <Login />

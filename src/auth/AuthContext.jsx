@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import { friendlyError, oauthRedirectError, supabase } from '../lib/supabase.js'
+import { friendlyError, supabase } from '../lib/supabase.js'
 
 // Login com Supabase Auth: e-mail e senha, ou Google. O perfil (nome, nível, fuso) fica em
 // public.profiles, criado por um gatilho no banco quando a conta nasce. Quem entra pelo Google
@@ -90,15 +90,12 @@ export function AuthProvider({ children }) {
     if (error) throw new Error(friendlyError(error))
   }
 
-  // Sai do site para o Google e volta para a mesma origem (localhost ou Vercel).
-  // O endereço de volta precisa estar em Authentication > URL Configuration > Redirect URLs.
-  async function loginWithGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin },
-    })
+  // Recebe o token do botão oficial do Google (Google Identity Services) e cria a sessão.
+  // nonce: o valor original; o Google recebeu o hash dele e o Supabase confere os dois.
+  const loginWithGoogleToken = useCallback(async (token, nonce) => {
+    const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token, nonce })
     if (error) throw new Error(friendlyError(error))
-  }
+  }, [])
 
   // Grava o nível escolhido depois do primeiro login pelo Google
   async function saveLevel(level) {
@@ -108,9 +105,6 @@ export function AuthProvider({ children }) {
     setProfile((p) => (p.uid === uid ? { ...p, data: { ...p.data, declared_level: level } } : p))
   }
 
-  const [oauthError, setOauthError] = useState(oauthRedirectError)
-  const clearOauthError = useCallback(() => setOauthError(null), [])
-
   async function logout() {
     await supabase.auth.signOut()
   }
@@ -118,8 +112,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       user, loading, profileError, retryProfile: () => setReloadKey((k) => k + 1),
-      register, login, loginWithGoogle, saveLevel, logout,
-      oauthError, clearOauthError,
+      register, login, loginWithGoogleToken, saveLevel, logout,
     }}>
       {children}
     </AuthContext.Provider>

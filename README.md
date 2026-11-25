@@ -53,7 +53,7 @@ Requisitos: Node.js 20.19 ou mais recente e um projeto no [Supabase](https://sup
 
 ```bash
 npm install
-cp .env.example .env   # preencha com a URL e a chave publishable do seu projeto
+cp .env.example .env   # preencha com a URL e a chave publishable do Supabase e o ID do cliente Google
 npm run dev
 ```
 
@@ -69,15 +69,18 @@ No **SQL Editor** do Supabase:
 2. Rode `supabase/migrations/002_validate_lesson_day.sql`. Ele ativa a conferência da data da lição.
 3. Rode `supabase/tests/rls_test.sql`. Todos os testes devem terminar como `OK`.
 
-Em **Authentication**, deixe o login por e-mail ativo. Em **URL Configuration**, coloque o endereço do site em **Site URL** e adicione em **Redirect URLs** os endereços para onde o login com Google pode voltar: `http://localhost:5173` e o endereço da Vercel.
+Em **Authentication**, deixe o login por e-mail ativo e coloque o endereço do site em **URL Configuration > Site URL**.
 
 ### Login com Google
 
-1. No [Google Cloud Console](https://console.cloud.google.com/), crie um ID do cliente OAuth do tipo **Aplicativo da Web**. Em **URIs de redirecionamento autorizados**, coloque `https://SEU-PROJETO.supabase.co/auth/v1/callback`.
-2. Na tela de consentimento OAuth, use `https://SEU-SITE/privacidade` como link da Política de Privacidade.
-3. No Supabase, em **Authentication > Sign In / Providers > Google**, ative o provedor e cole o ID e a chave secreta do cliente. A chave secreta fica só no painel do Supabase, nunca no código.
+O login usa o botão oficial do Google (Google Identity Services), desenhado no próprio site. O Google entrega um token de identidade à página, e o Supabase confere esse token com `signInWithIdToken` e um nonce. Assim, a janela do Google mostra o domínio do site, e não o do Supabase.
 
-O app volta para o mesmo endereço de onde saiu (localhost ou Vercel), por isso os dois precisam estar em **Redirect URLs**.
+1. No [Google Cloud Console](https://console.cloud.google.com/), crie um ID do cliente OAuth do tipo **Aplicativo da Web**. Em **Origens JavaScript autorizadas**, coloque `http://localhost`, `http://localhost:5173` e o endereço do site na Vercel.
+2. Na tela de consentimento OAuth, use o nome **LinguaGo** e `https://SEU-SITE/privacidade` como link da Política de Privacidade.
+3. No Supabase, em **Authentication > Sign In / Providers > Google**, ative o provedor, coloque o ID do cliente em **Client IDs** e a chave secreta do cliente, e deixe **Skip nonce check** desligado. A chave secreta fica só no painel do Supabase, nunca no código.
+4. Coloque o ID do cliente em `VITE_GOOGLE_CLIENT_ID`, no `.env` e nas variáveis de ambiente da Vercel. Ele é público.
+
+O botão só funciona em `localhost` ou em https. Pelo IP da rede local (`http://10.0.0.x`) ele não aparece.
 
 ## Áudios das frases
 
@@ -92,7 +95,7 @@ npm run audio                        # gera só as frases novas ou alteradas
 
 ## Deploy
 
-Na Vercel, importe o repositório e cadastre `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` nas variáveis de ambiente. O `vercel.json` faz todas as rotas abrirem o app. No Supabase, adicione o endereço do site em **URL Configuration** (Site URL e Redirect URLs).
+Na Vercel, importe o repositório e cadastre `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` e `VITE_GOOGLE_CLIENT_ID` nas variáveis de ambiente. O `vercel.json` faz todas as rotas abrirem o app. No Supabase, coloque o endereço do site em **URL Configuration > Site URL** e, no Google Cloud, em **Origens JavaScript autorizadas**.
 
 ## Estrutura
 
