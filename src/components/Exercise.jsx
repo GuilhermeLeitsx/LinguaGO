@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { emptyMatch, fillSentence } from '../exercises/grade.js'
-import { canSpeak, speak, stopSpeaking } from '../exercises/speech.js'
+import { DEFAULT_RATE, getVoiceState, speak, stopSpeaking, subscribeVoice } from '../exercises/speech.js'
+
+// 'loading' | 'ready' | 'none' (sem suporte ou sem voz em inglês)
+const useVoiceStatus = () => useSyncExternalStore(subscribeVoice, getVoiceState).status
 
 // Palavras entre aspas viram itálico laranja, como os títulos da home
 function rich(text) {
@@ -42,7 +45,7 @@ const SpeakerIcon = (
 
 // Botão pequeno para ouvir uma frase em inglês (usado na barra de feedback)
 export function SpeakButton({ text }) {
-  if (!canSpeak) return null
+  if (useVoiceStatus() === 'none') return null
   return (
     <button type="button" className="speak-mini" data-own-enter onClick={() => speak(text)} aria-label={`Ouvir: ${text}`}>
       {SpeakerIcon}
@@ -196,23 +199,24 @@ function Build({ ex, value, onChange, result, active }) {
 function Listen({ ex, value, onChange, result }) {
   const [playing, setPlaying] = useState(null) // 'normal' | 'slow' | null
   const [reveal, setReveal] = useState(false)
+  const voice = useVoiceStatus()
 
   const play = (mode) => speak(ex.text, {
-    rate: mode === 'slow' ? 0.55 : 0.9,
+    rate: mode === 'slow' ? 0.55 : DEFAULT_RATE,
     onStart: () => setPlaying(mode),
     onEnd: () => setPlaying(null),
   })
 
   useEffect(() => {
-    // toca automaticamente ao abrir o exercício
-    speak(ex.text, { rate: 0.9 })
+    // toca automaticamente ao abrir o exercício (espera as vozes carregarem, se preciso)
+    speak(ex.text)
     return stopSpeaking
   }, [ex.text])
 
   return (
     <>
       <h1 className="ex-q">Escute e escreva em <em>inglês</em>.</h1>
-      {canSpeak ? (
+      {voice !== 'none' ? (
         <div className="listen-row">
           <button className={`speak-btn ${playing === 'normal' ? 'playing' : ''}`} onClick={() => play('normal')} aria-label="Ouvir a frase">
             {SpeakerIcon}
@@ -224,7 +228,7 @@ function Listen({ ex, value, onChange, result }) {
         </div>
       ) : (
         <p className="auth-notice">
-          Seu navegador não consegue ler em voz alta.{' '}
+          Este navegador não tem uma voz em inglês para ler a frase.{' '}
           {reveal ? <>A frase é: <strong lang="en">{ex.text}</strong></> : <button className="link" onClick={() => setReveal(true)}>Mostrar a frase</button>}
         </p>
       )}
