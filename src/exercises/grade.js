@@ -2,7 +2,7 @@
 //
 // Formato de cada tipo nos arquivos src/data/en/lessons/*.json:
 //   choice    { question, options[], answer }
-//   translate { prompt: "Traduza: …", answer[] (aceitas, minúsculas) }
+//   translate { prompt: "Traduza: …", answer[] (aceitas; a primeira é a exibida, com maiúsculas certas) }
 //   match     { pairs: [[inglês, português], …] }
 //   build     { prompt, words[] (frase certa, em ordem), distractors[]?, answer[]? (outras ordens aceitas) }
 //   fill      { sentence: "… ___ …", translation, options[], answer }
@@ -31,6 +31,18 @@ const norm = (s) => s.toLowerCase().replace(/[’']/g, "'").replace(/[.!?,;:"“
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1)
 export const emptyMatch = { matched: [], errors: 0 }
 export const fillSentence = (ex, word) => ex.sentence.replace('___', word)
+
+// Frase em inglês que o app fala neste exercício (no feedback ou, no listen, no próprio exercício).
+// Também é usada pelo script que gera os áudios (scripts/audio), para os dois nunca divergirem.
+export function spokenText(ex) {
+  switch (ex.type) {
+    case 'translate': return cap(ex.answer[0])
+    case 'build': return ex.words.join(' ')
+    case 'fill': return fillSentence(ex, ex.answer)
+    case 'listen': return ex.text
+    default: return null
+  }
+}
 
 export function canCheck(ex, value) {
   switch (ex.type) {
@@ -70,23 +82,23 @@ export function grade(ex, value) {
     case 'choice':
       return { correct: value === ex.answer, answer: ex.answer }
     case 'translate': {
-      const a = cap(ex.answer[0])
+      const a = spokenText(ex)
       return { correct: ex.answer.map(norm).includes(norm(value)), answer: a, speak: a }
     }
     case 'build': {
-      const right = ex.words.join(' ')
+      const right = spokenText(ex)
       const used = value.map((t) => t.w)
       const ok = [right, ...(ex.answer ?? [])].map(norm)
       const correct = ok.includes(norm(used.join(' ')))
       return { correct, answer: right, speak: right, note: correct ? null : buildMistake(ex.words, used) }
     }
     case 'fill': {
-      const full = fillSentence(ex, ex.answer)
+      const full = spokenText(ex)
       return { correct: value === ex.answer, answer: full, speak: full }
     }
     case 'listen': {
       const ok = [ex.text, ...(ex.answer ?? [])].map(norm)
-      return { correct: ok.includes(norm(value)), answer: ex.text, speak: ex.text }
+      return { correct: ok.includes(norm(value)), answer: ex.text, speak: spokenText(ex) }
     }
     default: {
       const { errors } = value ?? emptyMatch

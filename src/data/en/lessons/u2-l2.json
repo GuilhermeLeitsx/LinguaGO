@@ -8,6 +8,6 @@
     { "type": "build", "prompt": "Eu tenho três livros.", "words": ["I", "have", "three", "books"], "distractors": ["two", "book"], "explain": "Com mais de um, o substantivo ganha s: one book, three books." },
     { "type": "translate", "prompt": "Traduza: Sete", "answer": ["seven"], "explain": "“Seven” é 7. A sequência é five, six, seven, eight." },
     { "type": "listen", "text": "Two cats", "answer": ["two cats", "2 cats"], "explain": "Two soa como “tu”, igual a “to” e “too”: o contexto mostra qual é qual." },
-    { "type": "translate", "prompt": "Traduza: Eu tenho dois gatos", "answer": ["i have two cats", "i have 2 cats"], "explain": "“I have” é eu tenho. O plural costuma ganhar s no final: cat, cats." }
+    { "type": "translate", "prompt": "Traduza: Eu tenho dois gatos", "answer": ["I have two cats", "I have 2 cats"], "explain": "“I have” é eu tenho. O plural costuma ganhar s no final: cat, cats." }
   ]
 }

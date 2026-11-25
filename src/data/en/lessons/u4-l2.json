@@ -6,6 +6,6 @@
     { "type": "fill", "sentence": "It's cold. I ___ close the window.", "translation": "Está frio. Vou fechar a janela.", "options": ["will", "am", "going", "would"], "answer": "will", "explain": "Will é usado para decisões tomadas no momento da fala." },
     { "type": "match", "pairs": [["Tomorrow", "Amanhã"], ["Next month", "Mês que vem"], ["Soon", "Em breve"], ["Someday", "Algum dia"]], "explain": "Repare: “next month”, sem “the” e sem preposição." },
     { "type": "build", "prompt": "Vamos nos encontrar às oito.", "words": ["We're", "meeting", "at", "eight"], "distractors": ["meet", "in"], "explain": "O presente contínuo também indica compromissos marcados: we’re meeting at eight." },
-    { "type": "translate", "prompt": "Traduza: Acho que vai chover", "answer": ["i think it will rain", "i think it's going to rain", "i think it is going to rain"], "explain": "Para previsões, tanto will quanto going to funcionam." }
+    { "type": "translate", "prompt": "Traduza: Acho que vai chover", "answer": ["I think it will rain", "I think it's going to rain", "I think it is going to rain"], "explain": "Para previsões, tanto will quanto going to funcionam." }
   ]
 }

@@ -6,6 +6,6 @@
     { "type": "choice", "question": "Qual conector introduz uma ideia contrária?", "options": ["However", "Moreover", "Therefore", "Furthermore"], "answer": "However", "explain": "However = no entanto. Moreover e furthermore somam ideias; therefore indica conclusão." },
     { "type": "fill", "sentence": "___ the rain, we went for a walk.", "translation": "Apesar da chuva, fomos caminhar.", "options": ["Despite", "Although", "Even", "However"], "answer": "Despite", "explain": "Despite vem antes de substantivo; although vem antes de uma oração completa." },
     { "type": "fill", "sentence": "The report ___ by the team last week.", "translation": "O relatório foi escrito pela equipe semana passada.", "options": ["was written", "wrote", "has wrote", "was wrote"], "answer": "was written", "explain": "Voz passiva: be + particípio. Write → written." },
-    { "type": "translate", "prompt": "Traduza: Eu concordo até certo ponto", "answer": ["i agree to some extent", "i agree to a certain extent", "i agree up to a point"], "explain": "“To some extent” e “up to a point” mostram concordância parcial." }
+    { "type": "translate", "prompt": "Traduza: Eu concordo até certo ponto", "answer": ["I agree to some extent", "I agree to a certain extent", "I agree up to a point"], "explain": "“To some extent” e “up to a point” mostram concordância parcial." }
   ]
 }

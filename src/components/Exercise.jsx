@@ -1,9 +1,9 @@
 import { useEffect, useState, useSyncExternalStore } from 'react'
 import { emptyMatch, fillSentence } from '../exercises/grade.js'
-import { DEFAULT_RATE, getVoiceState, speak, stopSpeaking, subscribeVoice } from '../exercises/speech.js'
+import { canSay, DEFAULT_RATE, getVoiceState, speak, stopSpeaking, subscribeVoice } from '../exercises/speech.js'
 
-// 'loading' | 'ready' | 'none' (sem suporte ou sem voz em inglês)
-const useVoiceStatus = () => useSyncExternalStore(subscribeVoice, getVoiceState).status
+// Dá para ouvir esta frase (MP3 pré-gerado ou voz em inglês do navegador)?
+const useCanSay = (text) => canSay(text, useSyncExternalStore(subscribeVoice, getVoiceState))
 
 // Palavras entre aspas viram itálico laranja, como os títulos da home
 function rich(text) {
@@ -45,7 +45,7 @@ const SpeakerIcon = (
 
 // Botão pequeno para ouvir uma frase em inglês (usado na barra de feedback)
 export function SpeakButton({ text }) {
-  if (useVoiceStatus() === 'none') return null
+  if (!useCanSay(text)) return null
   return (
     <button type="button" className="speak-mini" data-own-enter onClick={() => speak(text)} aria-label={`Ouvir: ${text}`}>
       {SpeakerIcon}
@@ -199,7 +199,7 @@ function Build({ ex, value, onChange, result, active }) {
 function Listen({ ex, value, onChange, result }) {
   const [playing, setPlaying] = useState(null) // 'normal' | 'slow' | null
   const [reveal, setReveal] = useState(false)
-  const voice = useVoiceStatus()
+  const audible = useCanSay(ex.text)
 
   const play = (mode) => speak(ex.text, {
     rate: mode === 'slow' ? 0.55 : DEFAULT_RATE,
@@ -216,7 +216,7 @@ function Listen({ ex, value, onChange, result }) {
   return (
     <>
       <h1 className="ex-q">Escute e escreva em <em>inglês</em>.</h1>
-      {voice !== 'none' ? (
+      {audible ? (
         <div className="listen-row">
           <button className={`speak-btn ${playing === 'normal' ? 'playing' : ''}`} onClick={() => play('normal')} aria-label="Ouvir a frase">
             {SpeakerIcon}

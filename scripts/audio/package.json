@@ -1,0 +1,13 @@
+{
+  "name": "linguago-audio",
+  "private": true,
+  "description": "Gera os MP3s das frases em inglês das lições (roda só localmente, fora do site)",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-audio.mjs"
+  },
+  "dependencies": {
+    "@breezystack/lamejs": "1.2.7",
+    "kokoro-js": "1.2.1"
+  }
+}
