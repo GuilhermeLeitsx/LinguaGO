@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { friendlyError, supabase } from '../lib/supabase.js'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { friendlyError, oauthRedirectError, supabase } from '../lib/supabase.js'
 
-// Login com Supabase Auth (e-mail e senha). O perfil (nome, nível, fuso) fica em public.profiles,
-// criado por um gatilho no banco quando a conta nasce.
+// Login com Supabase Auth: e-mail e senha, ou Google. O perfil (nome, nível, fuso) fica em
+// public.profiles, criado por um gatilho no banco quando a conta nasce. Quem entra pelo Google
+// chega sem nível (declared_level vazio) e escolhe antes de ver a trilha.
 
 const AuthContext = createContext(null)
 
@@ -89,12 +90,37 @@ export function AuthProvider({ children }) {
     if (error) throw new Error(friendlyError(error))
   }
 
+  // Sai do site para o Google e volta para a mesma origem (localhost ou Vercel).
+  // O endereço de volta precisa estar em Authentication > URL Configuration > Redirect URLs.
+  async function loginWithGoogle() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin },
+    })
+    if (error) throw new Error(friendlyError(error))
+  }
+
+  // Grava o nível escolhido depois do primeiro login pelo Google
+  async function saveLevel(level) {
+    if (!uid) return
+    const { error } = await supabase.from('profiles').update({ declared_level: level }).eq('id', uid)
+    if (error) throw new Error(friendlyError(error))
+    setProfile((p) => (p.uid === uid ? { ...p, data: { ...p.data, declared_level: level } } : p))
+  }
+
+  const [oauthError, setOauthError] = useState(oauthRedirectError)
+  const clearOauthError = useCallback(() => setOauthError(null), [])
+
   async function logout() {
     await supabase.auth.signOut()
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, profileError, retryProfile: () => setReloadKey((k) => k + 1), register, login, logout }}>
+    <AuthContext.Provider value={{
+      user, loading, profileError, retryProfile: () => setReloadKey((k) => k + 1),
+      register, login, loginWithGoogle, saveLevel, logout,
+      oauthError, clearOauthError,
+    }}>
       {children}
     </AuthContext.Provider>
   )

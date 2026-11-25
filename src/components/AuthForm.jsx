@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.jsx'
-import { LEVEL_CHOICES } from '../data/levels.js'
+import LevelPicker from './LevelPicker.jsx'
 import Logo from './Logo.jsx'
 
 const GoogleIcon = (
@@ -44,7 +44,7 @@ function AuthArt({ isRegister }) {
 
 export default function AuthForm({ mode }) {
   const isRegister = mode === 'register'
-  const { user, login, register } = useAuth()
+  const { user, login, register, loginWithGoogle, oauthError, clearOauthError } = useAuth()
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -52,15 +52,28 @@ export default function AuthForm({ mode }) {
   const [level, setLevel] = useState(null)
   const [showPass, setShowPass] = useState(false)
   const [error, setError] = useState('')
-  const [notice, setNotice] = useState('')
   const [busy, setBusy] = useState(false)
+  const [googleBusy, setGoogleBusy] = useState(false)
+  // erro na volta do Google (ex.: a pessoa cancelou) aparece uma vez, aqui
+  const [notice] = useState(() => oauthError)
+  useEffect(() => { if (oauthError) clearOauthError() }, [oauthError, clearOauthError])
 
   if (user) return <Navigate to="/" replace />
+
+  async function google() {
+    setError('')
+    setGoogleBusy(true)
+    try {
+      await loginWithGoogle() // a página sai para o Google; só volta aqui se der erro antes
+    } catch (err) {
+      setError(err.message)
+      setGoogleBusy(false)
+    }
+  }
 
   async function submit(e) {
     e.preventDefault()
     setError('')
-    setNotice('')
     setBusy(true)
     try {
       if (isRegister) {
@@ -100,12 +113,13 @@ export default function AuthForm({ mode }) {
             type="button"
             className="google-btn rise"
             style={{ '--d': '240ms' }}
-            onClick={() => { setError(''); setNotice('O login com Google ainda não está disponível. Use e-mail e senha por enquanto.') }}
+            onClick={google}
+            disabled={googleBusy || busy}
           >
             {GoogleIcon}
-            {isRegister ? 'Cadastrar com Google' : 'Entrar com Google'}
+            {googleBusy ? 'Abrindo o Google…' : isRegister ? 'Cadastrar com Google' : 'Entrar com Google'}
           </button>
-          {notice && <p className="auth-notice" role="status">{notice}</p>}
+          {notice && <p className="auth-notice" role="alert">{notice}</p>}
 
           <div className="divider rise" style={{ '--d': '300ms' }}><span>ou com e-mail</span></div>
 
@@ -113,26 +127,7 @@ export default function AuthForm({ mode }) {
             {isRegister && (
               <label>Nome<input value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" required /></label>
             )}
-            {isRegister && (
-              <fieldset className="level-pick">
-                <legend>Quanto inglês você já sabe?</legend>
-                <div className="level-grid">
-                  {LEVEL_CHOICES.map((c) => (
-                    <label key={c.id} className={`level-opt ${level === c.id ? 'on' : ''}`}>
-                      <input type="radio" name="level" value={c.id} checked={level === c.id} onChange={() => setLevel(c.id)} required />
-                      <span className="level-top">
-                        <strong>{c.label}</strong>
-                        <span className="level-tag">{c.range}</span>
-                      </span>
-                      <small>{c.hint}</small>
-                    </label>
-                  ))}
-                </div>
-                {level && level !== 'none' && (
-                  <small className="muted level-note">Depois do cadastro, um teste opcional de 10 perguntas libera as unidades do seu nível.</small>
-                )}
-              </fieldset>
-            )}
+            {isRegister && <LevelPicker value={level} onChange={setLevel} />}
             <label>E-mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required /></label>
             <label>
               Senha

@@ -586,3 +586,27 @@ button:disabled { cursor: not-allowed; }
 .import-local.done { display: block; border-style: solid; color: var(--ok); background: var(--ok-bg); font-weight: 600; }
 .import-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 .import-error { color: var(--bad); font-weight: 600; }
+
+/* Política de Privacidade (pública) */
+.legal { min-height: 100vh; padding: 24px 18px 80px; }
+.legal-top { max-width: 760px; margin: 0 auto 28px; }
+.legal-top .logo { height: 48px; }
+.legal-doc { max-width: 760px; margin: 0 auto; padding: clamp(24px, 5vw, 48px); }
+.legal-doc .eyebrow { margin-bottom: 14px; }
+.legal-doc h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.04; }
+.legal-doc h2 { margin: 34px 0 10px; font-size: 1.45rem; }
+.legal-doc p, .legal-doc li { color: var(--ink); max-width: 66ch; }
+.legal-doc ul { padding-left: 1.2em; margin: 0 0 1em; }
+.legal-doc li { margin-bottom: 8px; }
+.legal-doc li::marker { color: var(--coral); }
+.legal-doc a { color: var(--forest); font-weight: 600; overflow-wrap: anywhere; }
+.legal-lead { font-size: 1.12rem; color: var(--muted) !important; }
+.legal-back { margin-top: 36px; }
+
+/* Primeira entrada pelo Google: escolha do nível */
+.choose-level { min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 24px; padding: 32px 18px; }
+.choose-level .logo { height: 52px; }
+.choose-level .card { width: min(560px, 100%); display: grid; gap: 4px; }
+.choose-level h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin-bottom: 6px; }
+.choose-level .primary { width: 100%; margin-top: 6px; }
+.choose-level .text-link { justify-self: center; margin-top: 10px; }

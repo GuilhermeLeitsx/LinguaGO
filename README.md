@@ -28,7 +28,8 @@ App web para aprender inglês em lições curtas, feito para quem fala portuguê
 - **Lição:** 3 vidas por lição, correção na hora e atalhos de teclado.
 - **Teste de nivelamento:** opcional, com 10 perguntas. Libera as unidades até o nível alcançado.
 - **Progresso:** 10 XP por acerto, meta diária de 30 XP e sequência de dias, com datas no fuso horário do usuário.
-- **Conta:** login com e-mail e senha. O progresso fica salvo na conta, não no navegador.
+- **Conta:** login com e-mail e senha ou com Google. Quem entra pelo Google pela primeira vez escolhe o nível antes da trilha. O progresso fica salvo na conta, não no navegador.
+- **Privacidade:** a Política de Privacidade fica em [/privacidade](https://linguago-delta.vercel.app/privacidade), aberta sem login.
 - **Progresso antigo:** quem usou a versão anterior, que salvava no navegador, pode importar esse progresso para a conta uma única vez.
 
 ## Tecnologias
@@ -68,7 +69,15 @@ No **SQL Editor** do Supabase:
 2. Rode `supabase/migrations/002_validate_lesson_day.sql`. Ele ativa a conferência da data da lição.
 3. Rode `supabase/tests/rls_test.sql`. Todos os testes devem terminar como `OK`.
 
-Em **Authentication**, deixe o login por e-mail ativo e coloque `http://localhost:5173` em **URL Configuration**.
+Em **Authentication**, deixe o login por e-mail ativo. Em **URL Configuration**, coloque o endereço do site em **Site URL** e adicione em **Redirect URLs** os endereços para onde o login com Google pode voltar: `http://localhost:5173` e o endereço da Vercel.
+
+### Login com Google
+
+1. No [Google Cloud Console](https://console.cloud.google.com/), crie um ID do cliente OAuth do tipo **Aplicativo da Web**. Em **URIs de redirecionamento autorizados**, coloque `https://SEU-PROJETO.supabase.co/auth/v1/callback`.
+2. Na tela de consentimento OAuth, use `https://SEU-SITE/privacidade` como link da Política de Privacidade.
+3. No Supabase, em **Authentication > Sign In / Providers > Google**, ative o provedor e cole o ID e a chave secreta do cliente. A chave secreta fica só no painel do Supabase, nunca no código.
+
+O app volta para o mesmo endereço de onde saiu (localhost ou Vercel), por isso os dois precisam estar em **Redirect URLs**.
 
 ## Áudios das frases
 
@@ -83,13 +92,13 @@ npm run audio                        # gera só as frases novas ou alteradas
 
 ## Deploy
 
-Na Vercel, importe o repositório e cadastre `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` nas variáveis de ambiente. O `vercel.json` faz todas as rotas abrirem o app. No Supabase, adicione o endereço do site em **URL Configuration**.
+Na Vercel, importe o repositório e cadastre `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` nas variáveis de ambiente. O `vercel.json` faz todas as rotas abrirem o app. No Supabase, adicione o endereço do site em **URL Configuration** (Site URL e Redirect URLs).
 
 ## Estrutura
 
 ```
 src/
-  pages/        telas (início, login, trilha, lição, nivelamento, perfil)
+  pages/        telas (início, login, escolha de nível, trilha, lição, nivelamento, perfil, privacidade)
   components/   componentes reutilizáveis
   auth/         sessão e perfil do usuário
   progress/     regras de XP e sequência, e leitura do progresso no banco

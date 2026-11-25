@@ -222,8 +222,7 @@ export default function Landing() {
         </div>
         <div>
           <h4>Legal</h4>
-          <a href="#faq">Termos de uso</a>
-          <a href="#faq">Privacidade</a>
+          <Link to="/privacidade">Política de Privacidade</Link>
         </div>
         <p className="copy">© {YEAR} LinguaGo</p>
       </footer>
