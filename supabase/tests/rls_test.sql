@@ -1,6 +1,7 @@
 -- =============================================================================
 -- LinguaGo · teste de RLS e permissões
--- Rodar no SQL Editor DEPOIS de 001_init.sql e 002_validate_lesson_day.sql.
+-- Rodar no SQL Editor DEPOIS de 001_init.sql, 002_validate_lesson_day.sql
+-- e 003_remove_local_import.sql.
 -- Cria dois usuários de teste
 -- (A e B), age como cada um, tenta o que deve e o que não deve funcionar,
 -- e mostra uma tabela com OK/FALHOU. No fim apaga os usuários de teste.
@@ -136,17 +137,10 @@ exception when others then insert into _r (test, ok, detail) values ('A: pode ed
 end $$;
 
 do $$ begin
-  update public.profiles set legacy_xp = 99999 where id = (select a from _u);
-  insert into _r (test, ok, detail) values ('A: UPDATE em profiles.legacy_xp é bloqueado', false, 'update foi aceito');
-exception when insufficient_privilege then insert into _r (test, ok, detail) values ('A: UPDATE em profiles.legacy_xp é bloqueado', true, sqlerrm);
-  when others then insert into _r (test, ok, detail) values ('A: UPDATE em profiles.legacy_xp é bloqueado', false, 'erro inesperado: ' || sqlerrm);
-end $$;
-
-do $$ begin
-  update public.profiles set legacy_imported_at = null where id = (select a from _u);
-  insert into _r (test, ok, detail) values ('A: UPDATE em profiles.legacy_imported_at é bloqueado', false, 'update foi aceito');
-exception when insufficient_privilege then insert into _r (test, ok, detail) values ('A: UPDATE em profiles.legacy_imported_at é bloqueado', true, sqlerrm);
-  when others then insert into _r (test, ok, detail) values ('A: UPDATE em profiles.legacy_imported_at é bloqueado', false, 'erro inesperado: ' || sqlerrm);
+  update public.profiles set created_at = '2000-01-01' where id = (select a from _u);
+  insert into _r (test, ok, detail) values ('A: UPDATE em profiles.created_at (coluna protegida) é bloqueado', false, 'update foi aceito');
+exception when insufficient_privilege then insert into _r (test, ok, detail) values ('A: UPDATE em profiles.created_at (coluna protegida) é bloqueado', true, sqlerrm);
+  when others then insert into _r (test, ok, detail) values ('A: UPDATE em profiles.created_at (coluna protegida) é bloqueado', false, 'erro inesperado: ' || sqlerrm);
 end $$;
 
 do $$ begin
@@ -169,31 +163,20 @@ do $$ declare n int; begin
 exception when others then insert into _r (test, ok, detail) values ('A: não altera o perfil de B (0 linhas)', false, sqlerrm);
 end $$;
 
--- importação: uma vez só (dias antigos: hoje - 3 e hoje - 2)
-do $$ declare r jsonb; v_t date := (select t from _d); begin
-  r := public.import_local_progress(jsonb_build_object(
-    'completed', jsonb_build_array('u1-l1', 'u1-l2'),
-    'days', jsonb_build_object((v_t - 3)::text, 0, (v_t - 2)::text, 140),
-    'lessonXp', jsonb_build_object('u1-l2', 70),
-    'legacyXp', 150,
-    'placement', jsonb_build_object('level', 'B1', 'score', 8, 'total', 10, 'date', (v_t - 2)::text)));
-  insert into _r (test, ok, detail) values ('A: import_local_progress importa dias, lições, XP antigo e nível',
-    (select legacy_xp = 150 and legacy_imported_at is not null and placement_level = 'B1' from public.profiles where id = (select a from _u)), r::text);
-exception when others then insert into _r (test, ok, detail) values ('A: import_local_progress importa dias, lições, XP antigo e nível', false, sqlerrm);
-end $$;
-
+-- a importação do navegador foi removida em 003: a função não existe mais
 do $$ begin
-  perform public.import_local_progress('{"legacyXp":150}');
-  insert into _r (test, ok, detail) values ('A: segunda importação é recusada', false, 'aceitou');
-exception when others then insert into _r (test, ok, detail) values ('A: segunda importação é recusada', sqlstate = 'P0001', sqlerrm);
+  perform public.import_local_progress('{}'::jsonb);
+  insert into _r (test, ok, detail) values ('A: import_local_progress não existe mais', false, 'chamada aceita');
+exception when undefined_function then insert into _r (test, ok, detail) values ('A: import_local_progress não existe mais', true, sqlerrm);
+  when others then insert into _r (test, ok, detail) values ('A: import_local_progress não existe mais', false, 'erro inesperado: ' || sqlerrm);
 end $$;
 
--- XP total = 120 (hoje) + 140 (hoje - 2) + 0 (hoje - 3) + 150 (antigo) = 410
+-- XP total = só a soma dos dias: 40 + 80 de hoje (u1-l1 duas vezes) = 120, 1 lição
 do $$ begin
   insert into _r (test, ok, detail)
-  select 'A: user_stats.total_xp = soma dos dias + XP antigo (410)', total_xp = 410 and lessons_completed = 2, total_xp || ' XP, ' || lessons_completed || ' lições'
+  select 'A: user_stats.total_xp = soma dos dias (120 XP, 1 lição)', total_xp = 120 and lessons_completed = 1, total_xp || ' XP, ' || lessons_completed || ' lições'
   from public.user_stats;
-exception when others then insert into _r (test, ok, detail) values ('A: user_stats.total_xp = soma dos dias + XP antigo (410)', false, sqlerrm);
+exception when others then insert into _r (test, ok, detail) values ('A: user_stats.total_xp = soma dos dias (120 XP, 1 lição)', false, sqlerrm);
 end $$;
 
 reset role;

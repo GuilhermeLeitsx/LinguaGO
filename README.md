@@ -30,7 +30,6 @@ App web para aprender inglês em lições curtas, feito para quem fala portuguê
 - **Progresso:** 10 XP por acerto, meta diária de 30 XP e sequência de dias, com datas no fuso horário do usuário.
 - **Conta:** login com e-mail e senha ou com Google. Quem entra pelo Google pela primeira vez escolhe o nível antes da trilha. O progresso fica salvo na conta, não no navegador.
 - **Privacidade:** a Política de Privacidade fica em [/privacidade](https://linguago-delta.vercel.app/privacidade), aberta sem login.
-- **Progresso antigo:** quem usou a versão anterior, que salvava no navegador, pode importar esse progresso para a conta uma única vez.
 
 ## Tecnologias
 
@@ -42,10 +41,11 @@ App web para aprender inglês em lições curtas, feito para quem fala portuguê
 ## Segurança
 
 - **RLS em todas as tabelas:** cada usuário só lê os próprios dados.
-- **Gravação só pelo banco:** o navegador não grava direto nas tabelas de progresso. Tudo passa pelas funções `complete_lesson` e `import_local_progress`, que identificam o usuário pela sessão e calculam e limitam o XP no servidor.
+- **Gravação só pelo banco:** o navegador não grava direto nas tabelas de progresso. O XP só é gravado pela função `complete_lesson`, que identifica o usuário pela sessão e calcula e limita o XP no servidor.
 - **Data da lição conferida no servidor:** `complete_lesson` só aceita o dia de hoje, com 1 dia de folga para mais ou para menos, no fuso salvo no perfil. Isso impede registrar lições em datas inventadas para inflar a sequência.
 - **Teste automatizado das políticas:** `supabase/tests/rls_test.sql` confere, com dois usuários de teste e um visitante sem login, que ninguém lê dados de outra pessoa, altera o próprio XP ou grava uma data falsa.
 - **Chaves:** o front-end usa só a chave pública do Supabase. O `.env` não vai para o repositório.
+- **Cabeçalhos de segurança:** o `vercel.json` envia uma Content-Security-Policy que só libera o próprio site, o Supabase, o login do Google e o Google Fonts, além de `X-Frame-Options`, `X-Content-Type-Options` e `Referrer-Policy`. Se trocar de projeto no Supabase, atualize a URL dele no `connect-src`.
 
 ## Como rodar localmente
 
@@ -67,7 +67,8 @@ No **SQL Editor** do Supabase:
 
 1. Rode `supabase/migrations/001_init.sql`. Ele cria as tabelas, as políticas de RLS, as funções e o gatilho que cria o perfil no cadastro.
 2. Rode `supabase/migrations/002_validate_lesson_day.sql`. Ele ativa a conferência da data da lição.
-3. Rode `supabase/tests/rls_test.sql`. Todos os testes devem terminar como `OK`.
+3. Rode `supabase/migrations/003_remove_local_import.sql`. Ele remove a antiga importação do progresso salvo no navegador.
+4. Rode `supabase/tests/rls_test.sql`. Todos os testes devem terminar como `OK`.
 
 Em **Authentication**, deixe o login por e-mail ativo e coloque o endereço do site em **URL Configuration > Site URL**.
 
@@ -107,7 +108,6 @@ src/
   progress/     regras de XP e sequência, e leitura do progresso no banco
   exercises/    correção dos exercícios e áudio
   data/         conteúdo do curso (lições em JSON)
-  storage/      migração e backup do progresso antigo do navegador
   lib/          cliente do Supabase
 supabase/
   migrations/   esquema do banco

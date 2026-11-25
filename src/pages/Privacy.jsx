@@ -47,7 +47,7 @@ export default function Privacy() {
         <ul>
           <li><strong>Supabase:</strong> guarda a conta e o progresso. Cada pessoa só consegue acessar os próprios dados.</li>
           <li><strong>Vercel:</strong> hospeda o site. Como todo servidor, ela e o Supabase podem registrar dados técnicos de acesso, como o endereço IP, por segurança.</li>
-          <li><strong>Seu navegador:</strong> guarda a sessão de login, para você não precisar entrar toda vez. Se você usou o LinguaGo antes de existir a conta, o progresso antigo também pode estar salvo só no seu aparelho.</li>
+          <li><strong>Seu navegador:</strong> guarda a sessão de login, para você não precisar entrar toda vez. Se você usou o LinguaGo antes de existir a conta, o progresso antigo também pode estar salvo no seu aparelho. O app não usa mais esses dados, e você pode apagá-los limpando os dados do site no navegador.</li>
         </ul>
         <p>Os dados ficam guardados enquanto a sua conta existir.</p>
 

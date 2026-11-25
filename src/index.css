@@ -556,16 +556,6 @@ button.ghost:hover { border-color: var(--ink); color: var(--ink); }
 .week li.future { opacity: .4; }
 .week li.future i { border-style: dashed; }
 
-/* Backup do progresso (perfil) */
-.profile-backup { flex-wrap: wrap; }
-.profile-backup > div:first-child { flex: 1 1 280px; }
-.backup-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.pill.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); box-shadow: none; cursor: pointer; }
-.pill.ghost:hover { border-color: var(--ink); box-shadow: none; }
-.backup-msg { margin: 8px 0 0; font-weight: 600; font-size: .9rem; }
-.backup-msg.ok { color: var(--ok); }
-.backup-msg.bad { color: var(--bad); }
-
 /* Carregando / erro ao carregar (sessão e progresso vêm do Supabase) */
 .splash { min-height: 70vh; display: grid; place-content: center; justify-items: center; gap: 18px; padding: 24px 16px; text-align: center; }
 .splash .logo { height: 48px; }
@@ -583,16 +573,6 @@ button.ghost:hover { border-color: var(--ink); color: var(--ink); }
 .save-error p { margin: 0; }
 .pill.is-disabled { opacity: .55; pointer-events: none; }
 button:disabled { cursor: not-allowed; }
-
-/* Importar progresso salvo no navegador */
-.import-local { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 16px 18px; border: 1px dashed var(--line); border-radius: 16px; background: var(--surface); }
-.import-local.banner { margin: 0 0 24px; }
-.import-local.section { margin-top: 24px; }
-.import-local > div:first-child { flex: 1 1 260px; }
-.import-local p { margin: 4px 0 0; }
-.import-local.done { display: block; border-style: solid; color: var(--ok); background: var(--ok-bg); font-weight: 600; }
-.import-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
-.import-error { color: var(--bad); font-weight: 600; }
 
 /* Política de Privacidade (pública) */
 .legal { min-height: 100vh; padding: 24px 18px 80px; }

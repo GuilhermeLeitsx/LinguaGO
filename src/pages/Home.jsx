@@ -5,7 +5,6 @@ import { choiceById, LEVEL_NAME } from '../data/levels.js'
 import { parseDay } from '../progress/clock.js'
 import { DAILY_GOAL, dayStr, getStreak, xpToday } from '../progress/progress.js'
 import { useProgress } from '../progress/ProgressContext.jsx'
-import ImportLocal from '../components/ImportLocal.jsx'
 
 const XP_PER_CORRECT = 10
 const ZIGZAG = [0, 24, 0, -24] // deslocamento horizontal de cada nó, em % da trilha
@@ -162,8 +161,6 @@ export default function Home() {
             {nextIdx === -1 ? 'Você concluiu todas as lições. Pode refazer qualquer uma!' : 'Siga a trilha: cada lição libera a próxima.'}
           </p>
         </header>
-
-        <ImportLocal />
 
         {inviteTest && (
           <section className="test-invite rise" style={{ '--d': '200ms' }}>

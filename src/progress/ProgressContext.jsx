@@ -1,19 +1,18 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useAuth } from '../auth/AuthContext.jsx'
 import { friendlyError, supabase } from '../lib/supabase.js'
-import { hasLocalProgress, loadLocalProgress } from './localProgress.js'
 import { betterPlacement, dayStr, normalizeProgress } from './progress.js'
 
 // Progresso do usuário logado, lido do Supabase.
 // Leitura: direto das tabelas (o RLS só devolve as linhas do próprio usuário).
-// Escrita: só pelas funções complete_lesson e import_local_progress, que calculam
-// e limitam o XP no servidor. O dia enviado é sempre o dia LOCAL (dayStr).
+// Escrita do XP: só pela função complete_lesson, que calcula e limita o XP
+// no servidor. O dia enviado é sempre o dia LOCAL (dayStr).
 
 const ProgressContext = createContext(null)
 
 async function fetchProgress(uid) {
   const [prof, stats, lessons, days] = await Promise.all([
-    supabase.from('profiles').select('legacy_xp, legacy_imported_at, placement_level, placement_score, placement_total, placed_on').eq('id', uid).single(),
+    supabase.from('profiles').select('placement_level, placement_score, placement_total, placed_on').eq('id', uid).single(),
     supabase.from('user_stats').select('total_xp').eq('user_id', uid).single(),
     supabase.from('lesson_progress').select('lesson_id, best_xp'),
     // a sequência e a semana só precisam dos dias recentes; o total vem de user_stats
@@ -26,12 +25,11 @@ async function fetchProgress(uid) {
     completed: lessons.data.map((l) => l.lesson_id),
     lessonXp: Object.fromEntries(lessons.data.map((l) => [l.lesson_id, l.best_xp])),
     days: Object.fromEntries(days.data.map((d) => [d.day, d.xp])),
-    legacyXp: pr.legacy_xp,
     placement: pr.placement_level
       ? { level: pr.placement_level, score: pr.placement_score, total: pr.placement_total, date: pr.placed_on }
       : null,
   })
-  return { ...p, xp: stats.data.total_xp, importedAt: pr.legacy_imported_at }
+  return { ...p, xp: stats.data.total_xp }
 }
 
 export function ProgressProvider({ children }) {
@@ -79,16 +77,6 @@ export function ProgressProvider({ children }) {
     return reload()
   }, [state, uid, reload])
 
-  // Traz o progresso salvo neste navegador (antes do Supabase). O servidor só aceita uma vez.
-  const importLocal = useCallback(async () => {
-    const p = loadLocalProgress(user.email)
-    const { error } = await supabase.rpc('import_local_progress', {
-      p_payload: { completed: p.completed, days: p.days, lessonXp: p.lessonXp, legacyXp: p.legacyXp, placement: p.placement },
-    })
-    if (error && error.hint !== 'already_imported') throw new Error(friendlyError(error))
-    return reload()
-  }, [user, reload])
-
   const mine = state.uid === uid
   const progress = mine ? state.progress : null
   const value = {
@@ -98,9 +86,6 @@ export function ProgressProvider({ children }) {
     retry: () => setReloadKey((k) => k + 1),
     completeLesson,
     savePlacement,
-    importLocal,
-    // há progresso local deste e-mail que ainda não foi importado para a conta
-    canImportLocal: !!progress && !progress.importedAt && !!user && hasLocalProgress(user.email),
   }
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>
 }
