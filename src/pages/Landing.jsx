@@ -224,6 +224,11 @@ export default function Landing() {
           <h4>Legal</h4>
           <Link to="/privacidade">Política de Privacidade</Link>
         </div>
+        <div>
+          <h4>Contato</h4>
+          <a href="tel:+5553999100240">(53) 99910-0240</a>
+          <a href="mailto:linguagoo.app@gmail.com">linguagoo.app@gmail.com</a>
+        </div>
         <p className="copy">© {YEAR} LinguaGo</p>
       </footer>
     </div>

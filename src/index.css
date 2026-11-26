@@ -448,11 +448,12 @@ main.focus { max-width: 760px; padding: 0 18px 220px; }
 .final p { font-size: 1.2rem; opacity: .85; margin: 0 0 36px; }
 @media (prefers-color-scheme: dark) { .lp .final { color: #0f1a14; } }
 
-.lp-footer { background: var(--forest-d); color: var(--paper); padding: 64px 32px 32px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+.lp-footer { background: var(--forest-d); color: var(--paper); padding: 64px 32px 32px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.3fr; gap: 32px; }
 .lp-footer .brand { color: var(--paper); }
 .lp-footer h4 { margin: 0 0 14px; font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; opacity: .6; }
 .lp-footer a { display: block; color: var(--paper); text-decoration: none; padding: 4px 0; opacity: .9; transition: transform .2s var(--ease), color .2s; }
 .lp-footer a:hover { color: var(--sun); transform: translateX(4px); }
+.lp-footer a[href^="mailto:"] { overflow-wrap: anywhere; }
 .f-brand p { opacity: .7; max-width: 26ch; }
 .copy { grid-column: 1 / -1; margin: 24px 0 0; padding-top: 20px; border-top: 1px solid color-mix(in srgb, var(--paper) 25%, transparent); font-size: .9rem; opacity: .6; }
 @media (prefers-color-scheme: dark) { .lp-footer, .lp-footer a, .lp-footer .brand { color: #0f1a14; } .lp-footer { background: var(--forest-d); } .lp-footer a:hover { color: #fff; } }
